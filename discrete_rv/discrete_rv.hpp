@@ -27,14 +27,14 @@ std::vector<int> disc_inv_trans_seq(std::vector<std::pair<int, float>> events, i
     return res;
 }
 
-std::vector<int> gen_unif_perm(int low, int high){
+std::vector<int> gen_unif_perm(int low, int high, int seq_len){
     int len = high - low + 1;
     std::vector<int> start{};
     for (int i = low; i <= high; i++){
         start.push_back(i);
     }
     std::vector<int> res{};
-    for (int i = 0; i < len; i++){
+    for (int i = 0; i < std::min(len, seq_len); i++){
         int curr = rand_int(0, len - i - 1);
         res.push_back(start[curr]);
         std::swap(start[curr], start[len - i - 1]);

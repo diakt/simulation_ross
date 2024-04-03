@@ -7,7 +7,7 @@
 
 int main(){
     std::vector<std::pair<int,float>> probs {{1, 0.3}, {2, 0.15}, {3, 0.25}, {4, 0.3}};
-    std::vector<int> res = gen_unif_perm(1,6);
+    std::vector<int> res = gen_unif_perm(1, 6, 3);
     for(int x: res){
         std::cout << x << " ";
     }
