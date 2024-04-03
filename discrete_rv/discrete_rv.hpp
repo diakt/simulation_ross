@@ -1,3 +1,6 @@
+// Chapter 4 mostly
+
+
 #ifndef DISCRETE_RV
 #define DISCRETE_RV
 #include <vector>
