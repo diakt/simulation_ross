@@ -48,7 +48,7 @@ std::vector<int> sim_geometric(float p, int seq_len){
     std::vector<int> res {};
     for(int i=0; i < seq_len; i++){
         float numerator = std::log(1-my_rng());
-        float denominator = std::log(p);
+        float denominator = std::log(1-p);
         float frac = numerator/denominator;
         int int_res = (int)frac+1;
         // std::cout << frac << " " << int_res << std::endl; 
@@ -60,9 +60,11 @@ std::vector<int> sim_geometric(float p, int seq_len){
 
 int first_success(float p){
     //geom but a sane return, not vec
-    float numerator = std::log(1-my_rng());
-    float denom = std::log(p);
-    return (int)(numerator/denom)+1;
+    float num = std::log(1-my_rng());
+    float denom = std::log(1-p);
+    float frac = num/denom;
+    int int_res = (int)frac + 1;
+    return int_res;
 }
 
 std::vector<int> sim_bernoulli_seq(float p, int seq_len){
@@ -76,6 +78,10 @@ std::vector<int> sim_bernoulli_seq(float p, int seq_len){
         pos+=cycle;
     }
     return posits;
+}
+
+std::vector<int> sim_poisson(float lambda){
+    return std::vector<int>{};
 }
 
 #endif
