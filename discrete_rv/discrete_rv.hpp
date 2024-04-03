@@ -43,4 +43,39 @@ std::vector<int> gen_unif_perm(int low, int high, int seq_len){
     return res;
 }
 
+
+std::vector<int> sim_geometric(float p, int seq_len){
+    std::vector<int> res {};
+    for(int i=0; i < seq_len; i++){
+        float numerator = std::log(1-my_rng());
+        float denominator = std::log(p);
+        float frac = numerator/denominator;
+        int int_res = (int)frac+1;
+        // std::cout << frac << " " << int_res << std::endl; 
+        res.push_back(int_res);
+    }
+    return res;
+}
+
+
+int first_success(float p){
+    //geom but a sane return, not vec
+    float numerator = std::log(1-my_rng());
+    float denom = std::log(p);
+    return (int)(numerator/denom)+1;
+}
+
+std::vector<int> sim_bernoulli_seq(float p, int seq_len){
+    std::vector<int> posits; //succesfull bernoulli
+    int pos = 0;
+    int cycle;
+    while(pos < seq_len){
+        cycle = first_success(p);
+        if(pos+cycle > seq_len){ break;}
+        posits.push_back(pos+cycle);
+        pos+=cycle;
+    }
+    return posits;
+}
+
 #endif
