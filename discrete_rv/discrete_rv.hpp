@@ -80,8 +80,26 @@ std::vector<int> sim_bernoulli_seq(float p, int seq_len){
     return posits;
 }
 
-std::vector<int> sim_poisson(float lambda){
-    return std::vector<int>{};
+
+int sim_poisson_indiv(float lambda){
+    float rng = my_rng();
+    float p = std::exp(-lambda);
+    int i=0;
+    float F = p; //F is probability that r.v. is \leq i
+    while(rng >= F){
+        p = (lambda*p)/(i+1);
+        F += p;
+        i++;
+    }
+    return i;
+}
+
+std::vector<int> sim_poisson_seq(float lambda, int seq_len){
+    std::vector<int> res(seq_len, 0);
+    for(int i=0; i < seq_len; i++){
+        res[i]=sim_poisson_indiv(lambda);
+    }
+    return res;
 }
 
 #endif

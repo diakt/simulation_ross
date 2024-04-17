@@ -1,0 +1,47 @@
+import random
+
+def create_alias_table(prob):
+    n = len(prob)
+    prob_scaled = [p * n for p in prob]
+    alias = [-1] * n
+    small = []
+    large = []
+
+    for i, p in enumerate(prob_scaled):
+        if p < 1:
+            small.append(i)
+        else:
+            large.append(i)
+
+    while small and large:
+        small_idx = small.pop()
+        large_idx = large.pop()
+        alias[small_idx] = large_idx
+        prob_scaled[large_idx] -= (1 - prob_scaled[small_idx])
+        if prob_scaled[large_idx] < 1:
+            small.append(large_idx)
+        else:
+            large.append(large_idx)
+
+    for remaining in small + large:
+        alias[remaining] = -1
+
+    return alias
+
+def generate_sample(prob, alias):
+    n = len(prob)
+    i = random.randint(0, n-1)
+    r = random.random()
+    if r < prob[i]:
+        return i
+    else:
+        return alias[i]
+
+# Example usage
+prob = [0.2, 0.3, 0.1, 0.4]
+alias_table = create_alias_table(prob)
+
+# Generate 10 random samples
+for _ in range(10):
+    sample = generate_sample(prob, alias_table)
+    print("Sample:", sample)
