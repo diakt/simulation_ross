@@ -7,7 +7,7 @@
 
 int main(){
     float lambda = 0.5f;
-    std::vector<int> res = sim_poisson_seq(lambda, 5);
+    std::vector<int> res = sim_binom_seq(.5, 6, 10);
 
     for(int x: res){
         std::cout << x << " ";
